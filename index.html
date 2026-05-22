@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aninha — A Primeira Marca Beauty Gen Alpha do Brasil</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Three.js r128 -->
+  <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+  <script src="https://unpkg.com/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+
+  <!-- GSAP 3 + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: #1A0A2E;
+      background: #FFF8F5;
+      background-image: linear-gradient(160deg, #FFF8F5 0%, #FFE8EE 40%, #F5E6FF 70%, #FFF8F5 100%);
+      background-attachment: fixed;
+      background-size: 100% 100%;
+      overflow-x: hidden;
+    }
+
+    /* ===== PARTÍCULAS — CAMADA 1 (fixed, full viewport) ===== */
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== CONTEÚDO ACIMA DAS PARTÍCULAS ===== */
+    .site-wrap { position: relative; z-index: 1; }
+
+    /* ===== UTILITÁRIOS ===== */
+    .pill {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(255,60,172,0.45);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #FF3CAC;
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(8px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .grad-text {
+      background: linear-gradient(135deg, #FF3CAC 0%, #9B59B6 50%, #6C3483 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass-card {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,100,172,0.2);
+      border-radius: 20px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: linear-gradient(135deg, #FF3CAC 0%, #9B59B6 50%, #6C3483 100%);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(255,60,172,0.35);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 34px;
+      background: transparent;
+      color: #9B59B6;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      border: 1.5px solid rgba(155,89,182,0.5);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-outline:hover {
+      background: rgba(155,89,182,0.08);
+      border-color: #9B59B6;
+      transform: translateY(-2px);
+    }
+
+    section { position: relative; overflow: hidden; }
+
+    /* ===== SEÇÃO 1 — HERO ===== */
+    #hero {
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    #hero-3d-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin-top: 120px;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 400;
+      color: #1A0A2E;
+      max-width: 520px;
+      line-height: 1.3;
+      opacity: 0;
+    }
+
+    .hero-para {
+      font-size: 16px;
+      color: #7B5EA7;
+      max-width: 400px;
+      line-height: 1.7;
+      opacity: 0;
+    }
+
+    .hero-pill { opacity: 0; }
+    .hero-btn  { opacity: 0; }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .scroll-indicator span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #7B5EA7;
+      text-transform: uppercase;
+    }
+    .chevron {
+      width: 24px; height: 24px;
+      border-right: 2px solid #FF3CAC;
+      border-bottom: 2px solid #FF3CAC;
+      transform: rotate(45deg);
+      animation: chev-pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes chev-pulse {
+      0%, 100% { opacity: 1; transform: rotate(45deg) translateY(0); }
+      50%       { opacity: 0.4; transform: rotate(45deg) translateY(5px); }
+    }
+
+    /* arrow inside btn */
+    .arrow-down { display: inline-block; animation: arr-bounce 1.2s ease-in-out infinite; }
+    @keyframes arr-bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(4px); }
+    }
+
+    /* ===== SEÇÃO 2 — O MOMENTO ===== */
+    #momento {
+      padding: 64px 5vw 56px;
+    }
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #7B5EA7;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5vw, 60px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #1A0A2E;
+      margin-bottom: 36px;
+      max-width: 700px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+    }
+
+    .stat-card {
+      padding: 36px 28px;
+      transition: transform 0.15s ease;
+    }
+    .stat-card .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      font-style: italic;
+      background: linear-gradient(135deg, #FF3CAC 0%, #9B59B6 50%, #6C3483 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-card .stat-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1A0A2E;
+      margin-bottom: 6px;
+    }
+    .stat-card .stat-source {
+      font-size: 10px;
+      color: #7B5EA7;
+      letter-spacing: 0.05em;
+    }
+
+    .sources-line {
+      margin-top: 32px;
+      font-size: 11px;
+      color: #7B5EA7;
+      letter-spacing: 0.03em;
+    }
+
+    /* ===== SEÇÃO 3 — A ANINHA ===== */
+    #aninha {
+      padding: 64px 5vw;
+    }
+    .split-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 1200px;
+    }
+    .split-text .creator-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 700;
+      color: #1A0A2E;
+      line-height: 1;
+      margin: 12px 0 8px;
+    }
+    .split-text .creator-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: #7B5EA7;
+      margin-bottom: 28px;
+    }
+    .stats-row {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .stat-item .si-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      font-style: italic;
+      background: linear-gradient(135deg, #FF3CAC, #6C3483);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-item .si-label {
+      font-size: 12px;
+      color: #7B5EA7;
+    }
+    .split-text p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #3D2060;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 100px;
+      font-size: 12px;
+      color: #8B6914;
+      font-weight: 500;
+    }
+    .badge::before { content: "★"; color: #C9A84C; }
+
+    /* Imagem da Aninha */
+    .creator-img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .creator-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+    /* fallback se imagem não existir */
+    .creator-img-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #FFE0F0, #E8D5FF);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      color: rgba(255,60,172,0.6);
+    }
+
+    /* ===== SEÇÃO 4 — A REFERÊNCIA ===== */
+    #referencia {
+      padding: 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Vídeo de fundo da seção referência */
+    #ref-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    /* Overlay semitransparente para legibilidade */
+    .ref-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(255,248,245,0.42) 0%, rgba(255,232,238,0.38) 50%, rgba(245,230,255,0.42) 100%);
+      z-index: 1;
+    }
+
+    /* Conteúdo fica acima do vídeo */
+    .ref-content {
+      position: relative;
+      z-index: 2;
+      padding: 64px 5vw 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ref-intro {
+      max-width: 700px;
+      margin: 0 auto 44px;
+    }
+    .ref-intro p {
+      font-size: 16px;
+      color: #7B5EA7;
+      margin-top: 16px;
+      line-height: 1.7;
+    }
+
+    /* Timeline horizontal */
+    .timeline-h {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto 12px;
+      position: relative;
+    }
+    .timeline-h::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, #FF3CAC, #9B59B6, #6C3483);
+      z-index: 0;
+    }
+    .tl-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .tl-dot {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF3CAC, #6C3483);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 11px; font-weight: 700;
+      letter-spacing: -0.03em;
+      box-shadow: 0 4px 20px rgba(255,60,172,0.3);
+      text-align: center;
+      padding: 4px;
+    }
+    .tl-text { font-size: 12px; color: #3D2060; text-align: center; max-width: 110px; line-height: 1.5; }
+    .tl-text strong { display: block; font-size: 14px; color: #1A0A2E; margin-bottom: 4px; }
+
+    /* Canvas do produto 3D */
+    #product-canvas {
+      display: block;
+      margin: 0 auto 36px;
+      border-radius: 20px;
+    }
+
+    /* Comparação EUA vs Brasil */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .compare-card { padding: 32px; text-align: left; }
+    .compare-card .cc-flag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #7B5EA7;
+      margin-bottom: 12px;
+    }
+    .compare-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700; margin-bottom: 8px;
+    }
+    .compare-card ul {
+      list-style: none; display: flex; flex-direction: column; gap: 6px;
+    }
+    .compare-card ul li {
+      font-size: 13px; color: #3D2060; padding-left: 16px; position: relative;
+    }
+    .compare-card ul li::before { content: '→'; position: absolute; left: 0; color: #FF3CAC; }
+
+    /* ===== SEÇÃO PRODUTO ===== */
+    #produto-showcase {
+      padding: 56px 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .produto-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #7B5EA7;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .produto-titulo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      color: #1A0A2E;
+      text-align: center;
+      max-width: 600px;
+      line-height: 1.15;
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .produto-img-outer {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Aura / halo brilhante atrás da imagem */
+    .produto-aura {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,60,172,0.22) 0%, rgba(155,89,182,0.14) 45%, transparent 70%);
+      filter: blur(32px);
+      animation: aura-pulse 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes aura-pulse {
+      0%, 100% { transform: scale(1);   opacity: 0.8; }
+      50%       { transform: scale(1.12); opacity: 1;   }
+    }
+
+    /* Anel giratório externo */
+    .produto-ring {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(201,168,76,0.35);
+      animation: ring-spin 18s linear infinite;
+      pointer-events: none;
+    }
+    .produto-ring::before {
+      content: '';
+      position: absolute;
+      top: -5px; left: 50%;
+      transform: translateX(-50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #C9A84C;
+      box-shadow: 0 0 10px #C9A84C;
+    }
+    @keyframes ring-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Segundo anel menor, sentido contrário */
+    .produto-ring-2 {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,60,172,0.2);
+      animation: ring-spin 12s linear infinite reverse;
+      pointer-events: none;
+    }
+    .produto-ring-2::before {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #FF3CAC;
+      box-shadow: 0 0 8px #FF3CAC;
+    }
+
+    /* Imagem do produto — float + rotate suave */
+    .produto-img {
+      position: relative;
+      z-index: 2;
+      max-width: min(560px, 88vw);
+      width: 100%;
+      object-fit: contain;
+      animation: produto-float 5s ease-in-out infinite;
+      filter: drop-shadow(0 24px 48px rgba(255,60,172,0.25)) drop-shadow(0 8px 20px rgba(108,52,131,0.2));
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    @keyframes produto-float {
+      0%, 100% { transform: translateY(0px)   rotate(-1deg); }
+      33%       { transform: translateY(-14px) rotate(0.5deg); }
+      66%       { transform: translateY(-6px)  rotate(-0.8deg); }
+    }
+
+    /* Partículas decorativas ao redor */
+    .produto-sparks {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .spark {
+      position: absolute;
+      border-radius: 50%;
+      animation: spark-orbit linear infinite;
+    }
+    @keyframes spark-orbit {
+      from { transform: rotate(0deg) translateX(var(--r)) rotate(0deg); opacity: var(--op); }
+      to   { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); opacity: var(--op); }
+    }
+
+    /* Texto shimmer abaixo da imagem */
+    .produto-desc {
+      margin-top: 52px;
+      font-size: 15px;
+      color: #7B5EA7;
+      text-align: center;
+      max-width: 480px;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    @media (max-width: 600px) {
+      .produto-aura  { width: 280px; height: 280px; }
+      .produto-ring  { width: 320px; height: 320px; }
+      .produto-ring-2 { width: 240px; height: 240px; }
+    }
+
+    /* ===== SEÇÃO 5 — AS DUAS HIPÓTESES ===== */
+    #hipoteses {
+      padding: 64px 5vw;
+      text-align: center;
+    }
+    .hipoteses-header { margin-bottom: 12px; }
+    .hipoteses-header .section-title { max-width: none; }
+    .hipoteses-sub {
+      font-size: 17px; color: #7B5EA7; margin-bottom: 36px;
+    }
+
+    .hypotheses-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Flip card */
+    .flip-card {
+      perspective: 1200px;
+      height: 520px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .flip-card:hover .flip-card-inner,
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-front, .flip-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .flip-back { transform: rotateY(180deg); text-align: left; }
+
+    /* Card A — lilás */
+    .card-a .flip-front {
+      background: linear-gradient(160deg, rgba(155,89,182,0.12), rgba(108,52,131,0.08));
+      border: 1px solid rgba(155,89,182,0.25);
+    }
+    .card-a .flip-back {
+      background: linear-gradient(160deg, rgba(155,89,182,0.15), rgba(108,52,131,0.1));
+      border: 1px solid rgba(155,89,182,0.3);
+    }
+    /* Card B — rosa */
+    .card-b .flip-front {
+      background: linear-gradient(160deg, rgba(255,60,172,0.1), rgba(255,100,172,0.06));
+      border: 1px solid rgba(255,60,172,0.2);
+    }
+    .card-b .flip-back {
+      background: linear-gradient(160deg, rgba(255,60,172,0.12), rgba(255,100,172,0.08));
+      border: 1px solid rgba(255,60,172,0.25);
+    }
+
+    .flip-icon { font-size: 52px; margin-bottom: 16px; }
+    .flip-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: #7B5EA7; margin-bottom: 8px;
+    }
+    .flip-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; font-weight: 700; color: #1A0A2E; margin-bottom: 6px;
+    }
+    .flip-hint { font-size: 12px; color: #7B5EA7; }
+
+    .flip-back h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700; color: #1A0A2E; margin-bottom: 16px;
+    }
+    .flip-back ul { list-style: none; margin-bottom: 16px; }
+    .flip-back ul li {
+      font-size: 13px; color: #3D2060; padding: 6px 0;
+      border-bottom: 1px solid rgba(155,89,182,0.15);
+      display: flex; gap: 8px;
+    }
+    .flip-back ul li::before { content: '✦'; color: #FF3CAC; flex-shrink: 0; }
+    .flip-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 100px;
+      font-size: 11px; color: #8B6914;
+      margin-top: auto;
+    }
+
+    /* ===== SEÇÃO 6 — ESCALA DA MARCA ===== */
+    #escala {
+      padding: 64px 5vw;
+    }
+    .escala-inner { max-width: 1100px; }
+
+    /* Benchmark comparison */
+    .benchmark-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 36px 0;
+    }
+    .bm-card { padding: 32px; }
+    .bm-card .bm-brand { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7B5EA7; margin-bottom: 8px; }
+    .bm-card .bm-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 700; font-style: italic;
+      background: linear-gradient(135deg, #FF3CAC, #6C3483);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .bm-card .bm-desc { font-size: 13px; color: #3D2060; margin-top: 6px; line-height: 1.6; }
+
+    /* Timeline vertical */
+    .timeline-v {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 36px;
+    }
+    .timeline-v::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 28px;
+      bottom: 28px;
+      width: 2px;
+      background: linear-gradient(180deg, #FF3CAC, #9B59B6, #6C3483);
+    }
+    .tv-item {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 28px 0;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    .tv-dot {
+      position: absolute;
+      left: 12px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF3CAC, #6C3483);
+      border: 2px solid #FFF8F5;
+      flex-shrink: 0;
+    }
+    .tv-content { margin-left: 28px; }
+    .tv-year { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #7B5EA7; margin-bottom: 4px; }
+    .tv-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px; font-weight: 700; font-style: italic;
+      background: linear-gradient(135deg, #FF3CAC, #6C3483);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .tv-desc { font-size: 14px; color: #3D2060; margin-top: 4px; }
+
+    /* Barra de progresso */
+    .progress-wrap {
+      margin-top: 20px;
+      background: rgba(255,60,172,0.1);
+      border-radius: 100px;
+      height: 12px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #FF3CAC, #9B59B6, #6C3483);
+      border-radius: 100px;
+    }
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #7B5EA7;
+    }
+
+    /* ===== SEÇÃO 7 — CTA FINAL ===== */
+    #cta {
+      padding: 80px 5vw 72px;
+      text-align: center;
+      position: relative;
+    }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      max-width: 800px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #FF3CAC 0%, #9B59B6 50%, #6C3483 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cta-sub {
+      font-size: 18px;
+      color: #7B5EA7;
+      max-width: 580px;
+      margin: 0 auto 52px;
+      line-height: 1.7;
+    }
+    .cta-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 44px;
+    }
+
+    /* Partículas burst wrapper */
+    .burst-particle {
+      position: fixed;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Logos fontes */
+    .logos-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      padding: 32px 0 0;
+      border-top: 1px solid rgba(155,89,182,0.15);
+    }
+    .logo-pill {
+      padding: 8px 20px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(155,89,182,0.2);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #7B5EA7;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 900px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .split-layout { grid-template-columns: 1fr; gap: 48px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .hypotheses-grid { grid-template-columns: 1fr; }
+      .benchmark-row { grid-template-columns: 1fr; }
+      .timeline-h { flex-wrap: wrap; gap: 24px; }
+      .timeline-h::before { display: none; }
+    }
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .flip-card { height: auto; min-height: 420px; }
+      .hero-content { margin-top: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== CAMADA 1: PARTÍCULAS AMBIENTE (canvas fixo) ===== -->
+<canvas id="particles-canvas"></canvas>
+
+<div class="site-wrap">
+
+  <!-- ===== SEÇÃO 1 — HERO ===== -->
+  <section id="hero">
+    <!-- CAMADA 3: canvas Three.js do texto "ANINHA" 3D -->
+    <canvas id="hero-3d-canvas"></canvas>
+
+    <div class="hero-content">
+      <span class="pill hero-pill">Proposta Exclusiva · Confidencial</span>
+      <p class="hero-subtitle">A primeira marca de beauty Gen Alpha do Brasil</p>
+      <p class="hero-para">Uma oportunidade única no momento certo. Com a pessoa certa.</p>
+      <a href="#momento" class="btn-primary hero-btn">
+        Descobrir <span class="arrow-down">↓</span>
+      </a>
+    </div>
+
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="chevron"></div>
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO 2 — O MOMENTO ===== -->
+  <section id="momento">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 64px 5vw 56px;">
+      <p class="section-label">O mercado</p>
+      <h2 class="section-title">O mercado que ninguém no Brasil<br>ainda conquistou</h2>
+
+      <div class="stats-grid">
+        <!-- Card 1 -->
+        <div class="glass-card stat-card" data-tilt>
+          <span class="stat-num" data-count="14" data-prefix="US$" data-suffix="B">US$0B</span>
+          <p class="stat-label">gastos em beauty pela Gen Alpha em 2024</p>
+          <p class="stat-source">FIT Report, 2025</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="glass-card stat-card" data-tilt>
+          <span class="stat-num" data-count="70" data-prefix="+" data-suffix="%">+0%</span>
+          <p class="stat-label">crescimento vs. 2023</p>
+          <p class="stat-source">FIT Report, 2025</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="glass-card stat-card" data-tilt>
+          <span class="stat-num" data-count="150" data-prefix="+" data-suffix="%">+0%</span>
+          <p class="stat-label">adolescentes usando sérum facial em 1 ano</p>
+          <p class="stat-source">Kantar, 2024</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="glass-card stat-card" data-tilt>
+          <span class="stat-num" data-count="49" data-prefix="" data-suffix="M">0M</span>
+          <p class="stat-label">membros Gen Alpha monitorados globalmente</p>
+          <p class="stat-source">Kantar Worldpanel</p>
+        </div>
+        <!-- Card 5 -->
+        <div class="glass-card stat-card" data-tilt>
+          <span class="stat-num" data-count="91" data-prefix="" data-suffix="%">0%</span>
+          <p class="stat-label">das meninas 7–17 anos usam lip gloss</p>
+          <p class="stat-source">The Benchmarking Co.</p>
+        </div>
+        <!-- Card 6 -->
+        <div class="glass-card stat-card" data-tilt>
+          <span class="stat-num" data-count="4" data-prefix="" data-suffix="×">0×</span>
+          <p class="stat-label">brasileiros compram mais por influência vs. EUA</p>
+          <p class="stat-source">Norte Media</p>
+        </div>
+      </div>
+
+      <p class="sources-line">
+        Fontes: Kantar Worldpanel 2024 · Fashion Institute of Technology 2025 · The Benchmarking Company · Norte Media
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO 3 — A ANINHA ===== -->
+  <section id="aninha">
+    <div class="split-layout" style="max-width:1200px; margin:0 auto; padding:0 5vw;">
+      <!-- Texto -->
+      <div class="split-text">
+        <span class="pill" style="margin-bottom:20px;display:inline-block;">A criadora</span>
+        <h2 class="creator-name">Anna Clara Rios</h2>
+        <p class="creator-sub">A maior criadora de conteúdo infantil do Brasil</p>
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="si-num">22.7M</span>
+            <span class="si-label">YouTube</span>
+          </div>
+          <div class="stat-item">
+            <span class="si-num">2.7M</span>
+            <span class="si-label">TikTok</span>
+          </div>
+          <div class="stat-item">
+            <span class="si-num">1.2M</span>
+            <span class="si-label">Instagram</span>
+          </div>
+        </div>
+        <p>
+          Com um ICP de jovens de 7 a 15 anos apaixonadas por brilho, criatividade e autoexpressão, a Aninha tem exatamente o público que a Gen Alpha beauty precisa — e nenhuma marca brasileira ainda soube conquistar.
+        </p>
+        <span class="badge">Kantar 2024: recomendações via redes sociais cresceram +14% entre jovens</span>
+      </div>
+
+      <!-- Imagem -->
+      <!-- SUBSTITUIR: trocar src pela foto da Aninha desejada -->
+      <div class="creator-img-wrap" data-img-slot="foto-aninha-principal">
+        <img src="foto aninha 1.jpg" alt="Anna Clara Rios — Aninha" id="aninha-img-main"
+             onerror="this.style.display='none'; document.getElementById('aninha-fallback').style.display='flex';" />
+        <!-- fallback caso a imagem não carregue -->
+        <div class="creator-img-fallback" id="aninha-fallback">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="30" r="18" fill="rgba(255,60,172,0.3)"/>
+            <ellipse cx="40" cy="70" rx="28" ry="18" fill="rgba(255,60,172,0.2)"/>
+          </svg>
+          <span>[ Foto da Aninha ]</span>
+          <span style="font-size:11px;color:#7B5EA7;">Substituir: foto aninha 1.jpg</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO 4 — A REFERÊNCIA ===== -->
+  <section id="referencia">
+    <!-- Vídeo de fundo -->
+    <video id="ref-video-bg" src="vídeo do hidratante.mp4" autoplay muted loop playsinline></video>
+    <!-- Overlay de legibilidade -->
+    <div class="ref-overlay"></div>
+
+    <!-- Conteúdo acima do vídeo -->
+    <div class="ref-content">
+      <div class="ref-intro">
+        <p class="section-label">O playbook já foi testado</p>
+        <h2 class="section-title" style="max-width:none;">Sincerely Yours fez nos EUA.<br>Nós faremos no Brasil.</h2>
+      </div>
+
+      <!-- Timeline horizontal -->
+      <div class="timeline-h" id="timeline-h">
+        <div class="tl-item">
+          <div class="tl-dot">Set<br>2025</div>
+          <div class="tl-text"><strong>Lançamento</strong>na Sephora com 4 produtos</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">80K</div>
+          <div class="tl-text"><strong>80.000 pessoas</strong>no evento de mall em NJ</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="font-size:9px;">Sold<br>Out</div>
+          <div class="tl-text"><strong>Sold out</strong>esgotado nos EUA na semana seguinte</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">US$7M</div>
+          <div class="tl-text"><strong>US$7M</strong>Coefficient Capital + Strand Equity</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot" style="font-size:9px;">Net<br>flix</div>
+          <div class="tl-text"><strong>Netflix</strong>deal de série para expandir o universo</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO PRODUTO — entre Referência e Estratégia ===== -->
+  <section id="produto-showcase">
+    <p class="produto-label">O produto</p>
+    <h2 class="produto-titulo">Feito para brilhar.<br>Pensado para a Gen Alpha.</h2>
+
+    <div class="produto-img-outer">
+      <!-- Halos e anéis decorativos -->
+      <div class="produto-aura"></div>
+      <div class="produto-ring"></div>
+      <div class="produto-ring-2"></div>
+
+      <!-- Partículas SVG orbitando -->
+      <div class="produto-sparks" id="produto-sparks"></div>
+
+      <!-- SUBSTITUIR: produto da aninha.png -->
+      <img
+        src="3 produtos aninha.png"
+        alt="Produtos Aninha Beauty"
+        class="produto-img"
+        id="produto-img"
+        data-img-slot="produto-aninha"
+      />
+    </div>
+
+    <p class="produto-desc">
+      Clean. Divertido. Colecionável. A fórmula perfeita para conquistar<br>
+      a geração que mais consome beauty no mundo.
+    </p>
+  </section>
+
+  <!-- ===== SEÇÃO 5 — AS DUAS HIPÓTESES ===== -->
+  <section id="hipoteses">
+    <div style="padding:64px 5vw; max-width:1200px; margin:0 auto;">
+      <div class="hipoteses-header">
+        <p class="section-label" style="text-align:center;">A estratégia</p>
+        <h2 class="section-title" style="max-width:none; text-align:center;">Uma visão. Um caminho.</h2>
+      </div>
+      <p class="hipoteses-sub">Skincare pensado para a Gen Alpha — bonito, limpo e feito para brilhar.</p>
+
+      <!-- Card único centralizado -->
+      <div style="display:flex; justify-content:center;">
+        <div class="flip-card card-a" style="max-width:600px; width:100%;">
+          <div class="flip-card-inner">
+            <!-- Frente -->
+            <div class="flip-front glass-card">
+              <div class="flip-icon">🧴</div>
+              <p class="flip-tag">A hipótese</p>
+              <h3 class="flip-name">Skincare Gen Alpha BR</h3>
+              <p style="font-size:15px; color:#3D2060; margin:14px 0 10px; line-height:1.7;">
+                Fórmulas suaves, certificadas ANVISA. Conquistar jovens e pais ao mesmo tempo.
+              </p>
+              <!-- 3 produtos em destaque -->
+              <div style="display:flex; gap:20px; justify-content:center; margin:16px 0 20px;">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                  <span style="font-size:28px;">💋</span>
+                  <span style="font-size:11px;font-weight:600;color:#FF3CAC;letter-spacing:0.05em;">GLOSS</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                  <span style="font-size:28px;">✨</span>
+                  <span style="font-size:11px;font-weight:600;color:#9B59B6;letter-spacing:0.05em;">HIDRATANTE</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                  <span style="font-size:28px;">💨</span>
+                  <span style="font-size:11px;font-weight:600;color:#6C3483;letter-spacing:0.05em;">HIT FRESH</span>
+                </div>
+              </div>
+              <p class="flip-hint">Hover para ver detalhes →</p>
+            </div>
+            <!-- Verso -->
+            <div class="flip-back glass-card">
+              <h4>Skincare Gen Alpha BR</h4>
+              <ul>
+                <li><strong>Gloss</strong> — lip gloss brilhante, fórmula clean, sem parabenos, 91% do ICP já usa</li>
+                <li><strong>Hidratante Facial</strong> — textura leve, hidratação profunda, certificado ANVISA infantil</li>
+                <li><strong>Hit Fresh</strong> — névoa refrescante + brilho sutil, uso rápido e viral no dia a dia</li>
+                <li>Sem ativos agressivos — seguro para peles jovens de 7 a 15 anos</li>
+                <li>Ticket: <strong>R$69–99</strong> por kit colecionável</li>
+                <li>D2C + Studios Aninha + varejo âncora (Boticário / Sephora BR)</li>
+              </ul>
+              <span class="flip-badge">★ Sérum facial +150% entre teens · Kantar 2024 — a educação skincare chegou</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO 6 — ESCALA DA MARCA ===== -->
+  <section id="escala">
+    <div class="escala-inner" style="max-width:1100px; margin:0 auto; padding:64px 5vw;">
+      <p class="section-label">O tamanho da oportunidade</p>
+      <h2 class="section-title">De zero a referência<br>nacional em 3 anos.</h2>
+
+      <!-- Benchmark -->
+      <div class="benchmark-row">
+        <div class="glass-card bm-card">
+          <p class="bm-brand">Norte Media + Guday (Manu Cit)</p>
+          <p class="bm-num" id="bm-num-1">R$0M</p>
+          <p class="bm-desc">Receita em 2024 → meta de <strong>R$80M em 2025</strong>. Manu Cit: 3M de seguidores.</p>
+        </div>
+        <div class="glass-card bm-card" style="border-color:rgba(255,60,172,0.3);">
+          <p class="bm-brand">Aninha Beauty — Projeção</p>
+          <p class="bm-num" style="-webkit-text-fill-color: transparent; background: linear-gradient(135deg,#FF3CAC,#6C3483); -webkit-background-clip:text; background-clip:text;">R$80M+</p>
+          <p class="bm-desc">Com base de <strong>22.7M subscribers</strong> — 7× maior que a Manu Cit. Escala proporcional.</p>
+        </div>
+      </div>
+
+      <!-- Timeline vertical -->
+      <div class="timeline-v" id="timeline-v">
+        <div class="tv-item" id="tv-1">
+          <span class="tv-dot"></span>
+          <div class="tv-content">
+            <p class="tv-year">Ano 1</p>
+            <p class="tv-num" data-target="12">R$0M</p>
+            <p class="tv-desc">Lançamento D2C + Studios Aninha. Meta: <strong>R$8–12M</strong></p>
+          </div>
+        </div>
+        <div class="tv-item" id="tv-2">
+          <span class="tv-dot"></span>
+          <div class="tv-content">
+            <p class="tv-year">Ano 2</p>
+            <p class="tv-num" data-target="50">R$0M</p>
+            <p class="tv-desc">Entrada varejo âncora + linha completa. Meta: <strong>R$30–50M</strong></p>
+          </div>
+        </div>
+        <div class="tv-item" id="tv-3">
+          <span class="tv-dot"></span>
+          <div class="tv-content">
+            <p class="tv-year">Ano 3</p>
+            <p class="tv-num" data-target="80">R$0M+</p>
+            <p class="tv-desc">Expansão de linha + licenciamento internacional. Meta: <strong>R$80M+</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de progresso -->
+      <div style="margin-top: 40px;">
+        <p style="font-size:13px; color:#7B5EA7; margin-bottom:12px; font-weight:500;">Projeção de receita 3 anos</p>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="progress-labels">
+          <span>R$0</span>
+          <span>R$20M</span>
+          <span>R$40M</span>
+          <span>R$60M</span>
+          <span>R$80M+</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SEÇÃO 7 — CTA FINAL ===== -->
+  <section id="cta">
+    <h2 class="cta-title">Vamos construir a próxima grande marca do Brasil.</h2>
+    <p class="cta-sub">A Gen Alpha está esperando. O mercado está aberto. A Aninha é a peça.</p>
+    <div class="cta-btns">
+      <a href="#referencia" class="btn-outline">
+        Ver referências
+      </a>
+    </div>
+
+    <!-- Logos das fontes -->
+    <div class="logos-strip">
+      <span class="logo-pill">Kantar Worldpanel</span>
+      <span class="logo-pill">FIT Report 2025</span>
+      <span class="logo-pill">The Benchmarking Co.</span>
+      <span class="logo-pill">Norte Media</span>
+      <span class="logo-pill">Coefficient Capital</span>
+    </div>
+  </section>
+
+</div><!-- /site-wrap -->
+
+<!-- ===== FOTO DA ANINHA 2 oculta — usada na seção de referência se necessário ===== -->
+<!-- SUBSTITUIR: foto aninha 2.jpg disponível para uso nas seções -->
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO GERAL
+   ============================================================ */
+const IS_MOBILE = window.innerWidth < 768;
+const PARTICLE_COUNT = IS_MOBILE ? 800 : 1800;
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============================================================
+   SEÇÃO 1 — HERO 3D (texto "ANINHA" + câmera)
+   ============================================================ */
+(function initHero3D() {
+  const canvas = document.getElementById('hero-3d-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0);
+  renderer.physicallyCorrectLights = true;
+  renderer.toneMapping = THREE.LinearToneMapping;
+  renderer.toneMappingExposure = 1.0;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 8;
+
+  // Iluminação aprimorada — sem fosco
+  const ambLight = new THREE.AmbientLight(0xffffff, 2.8);
+  scene.add(ambLight);
+
+  // Luz frontal branca brilhante
+  const frontLight = new THREE.DirectionalLight(0xffffff, 2.5);
+  frontLight.position.set(0, 2, 10);
+  scene.add(frontLight);
+
+  // Luz rosa com alta intensidade
+  const pinkLight = new THREE.PointLight(0xFF3CAC, 4.0, 30);
+  pinkLight.position.set(2, 3, 8);
+  scene.add(pinkLight);
+
+  // Luz roxo/dourado de preenchimento lateral
+  const purpleLight = new THREE.PointLight(0xC9A84C, 2.0, 25);
+  purpleLight.position.set(-4, -1, 6);
+  scene.add(purpleLight);
+
+  let textGroup = null;
+  let mouseX = 0, mouseY = 0;
+
+  // Carrega fonte e cria texto 3D
+  const loader = new THREE.FontLoader();
+  loader.load(
+    'https://unpkg.com/three@0.128.0/examples/fonts/helvetiker_bold.typeface.json',
+    function(font) {
+      const letters = 'ANINHA'.split('');
+      const meshes = [];
+      textGroup = new THREE.Group();
+
+      // Calcular largura total para centralizar
+      const tempGeos = letters.map(l => new THREE.TextGeometry(l, {
+        font, size: IS_MOBILE ? 0.75 : 1.1, height: 0.2, curveSegments: 10
+      }));
+      tempGeos.forEach(g => g.computeBoundingBox());
+      const totalWidth = tempGeos.reduce((acc, g) => {
+        return acc + (g.boundingBox.max.x - g.boundingBox.min.x) + 0.12;
+      }, 0);
+
+      // Cores do gradiente: rosa claro → lilás claro
+      const gradStart = new THREE.Color(0xFF9EE0); // rosa pastel claro
+      const gradEnd   = new THREE.Color(0xD4AAFF); // lilás suave claro
+      const sideStart = new THREE.Color(0xFF79C6); // rosa vibrante médio
+      const sideEnd   = new THREE.Color(0xB388FF); // lilás vibrante médio
+
+      let xPos = -totalWidth / 2;
+      letters.forEach((letter, i) => {
+        const geo = new THREE.TextGeometry(letter, {
+          font, size: IS_MOBILE ? 0.75 : 1.1, height: 0.28, curveSegments: 16
+        });
+        geo.computeBoundingBox();
+        const w = geo.boundingBox.max.x - geo.boundingBox.min.x;
+
+        // Interpolação de cor por letra (0 = rosa, 1 = lilás)
+        const t = letters.length > 1 ? i / (letters.length - 1) : 0;
+        const faceColor = gradStart.clone().lerp(gradEnd, t);
+        const sideColor = sideStart.clone().lerp(sideEnd, t);
+
+        const mat = [
+          // Face frontal — gradiente rosa claro → lilás claro
+          new THREE.MeshStandardMaterial({ color: faceColor, metalness: 0.45, roughness: 0.08, envMapIntensity: 1.0 }),
+          // Extrusão lateral — rosa/lilás médio com brilho
+          new THREE.MeshStandardMaterial({ color: sideColor, metalness: 0.40, roughness: 0.12, envMapIntensity: 0.9 })
+        ];
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.position.x = xPos;
+        mesh.position.z = -12; // início fora da tela
+        textGroup.add(mesh);
+        meshes.push(mesh);
+        xPos += w + 0.12;
+      });
+
+      // Centralizar verticalmente
+      textGroup.position.y = IS_MOBILE ? 1.2 : 1.5;
+      scene.add(textGroup);
+
+      // Animação de entrada: stagger GSAP por letra
+      meshes.forEach((m, i) => {
+        gsap.to(m.position, {
+          z: 0,
+          duration: 1.2,
+          delay: 0.3 + i * 0.1,
+          ease: 'power3.out'
+        });
+      });
+    },
+    undefined,
+    () => {
+      // Fallback se fonte não carregar: sem texto 3D
+    }
+  );
+
+  // Interação com mouse
+  window.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // Resize
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // IntersectionObserver para pausar quando fora da viewport
+  let heroVisible = true;
+  const heroObs = new IntersectionObserver(entries => {
+    heroVisible = entries[0].isIntersecting;
+  }, { threshold: 0 });
+  heroObs.observe(document.getElementById('hero'));
+
+  // Loop de renderização
+  let clock = new THREE.Clock();
+  function animateHero() {
+    requestAnimationFrame(animateHero);
+    if (!heroVisible) return;
+    const t = clock.getElapsedTime();
+    if (textGroup) {
+      textGroup.rotation.y = THREE.MathUtils.lerp(
+        textGroup.rotation.y,
+        mouseX * 0.06,
+        0.05
+      );
+    }
+    renderer.render(scene, camera);
+  }
+  animateHero();
+})();
+
+/* canvas do produto 3D removido — substituído por vídeo */
+
+/* ============================================================
+   CAMADA 1 — PARTÍCULAS AMBIENTE (canvas fixo, Three.js Points)
+   ============================================================ */
+(function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
+  camera.position.z = 30;
+
+  // Cores das partículas
+  const pColors = [
+    new THREE.Color(0xFF3CAC),
+    new THREE.Color(0xC9A84C),
+    new THREE.Color(0x9B59B6),
+    new THREE.Color(0xffffff)
+  ];
+
+  const count = PARTICLE_COUNT;
+  const positions = new Float32Array(count * 3);
+  const colors    = new Float32Array(count * 3);
+  const sizes     = new Float32Array(count);
+  const velocities = [];
+  const phases     = [];
+
+  for (let i = 0; i < count; i++) {
+    const x = (Math.random() - 0.5) * 80;
+    const y = (Math.random() - 0.5) * 80;
+    const z = (Math.random() - 0.5) * 20;
+    positions[i*3]   = x;
+    positions[i*3+1] = y;
+    positions[i*3+2] = z;
+
+    const c = pColors[Math.floor(Math.random() * pColors.length)];
+    colors[i*3]   = c.r;
+    colors[i*3+1] = c.g;
+    colors[i*3+2] = c.b;
+
+    sizes[i] = 0.8 + Math.random() * 1.7;
+
+    velocities.push({
+      vx: (Math.random() - 0.5) * 0.008,
+      vy: (Math.random() - 0.5) * 0.008,
+    });
+    phases.push(Math.random() * Math.PI * 2);
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
+  geo.setAttribute('size',     new THREE.BufferAttribute(sizes, 1));
+
+  const mat = new THREE.PointsMaterial({
+    size: 0.18,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.55,
+    sizeAttenuation: true,
+  });
+
+  const points = new THREE.Points(geo, mat);
+  scene.add(points);
+
+  // Mouse
+  let mx = 0, my = 0;
+  window.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth - 0.5) * 80;
+    my = -(e.clientY / window.innerHeight - 0.5) * 80;
+  });
+
+  // Densidade via ScrollTrigger (hero e CTA)
+  let densityMultiplier = 1;
+  if (!REDUCED_MOTION) {
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      onUpdate: self => { densityMultiplier = 1 + self.progress * 0.5; }
+    });
+    ScrollTrigger.create({
+      trigger: '#cta',
+      start: 'top 80%',
+      end: 'bottom bottom',
+      onUpdate: self => { densityMultiplier = 1 + self.progress * 2; }
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  const clock = new THREE.Clock();
+  function animateParticles() {
+    requestAnimationFrame(animateParticles);
+    const t = clock.getElapsedTime();
+    const pos = geo.attributes.position.array;
+
+    for (let i = 0; i < count; i++) {
+      const idx = i * 3;
+      // Movimento browniano
+      pos[idx]   += velocities[i].vx + Math.sin(t * 0.3 + phases[i]) * 0.002;
+      pos[idx+1] += velocities[i].vy + Math.cos(t * 0.25 + phases[i]) * 0.002;
+
+      // Wrap around
+      if (pos[idx]   >  40) pos[idx]   = -40;
+      if (pos[idx]   < -40) pos[idx]   =  40;
+      if (pos[idx+1] >  40) pos[idx+1] = -40;
+      if (pos[idx+1] < -40) pos[idx+1] =  40;
+
+      // Atração leve ao mouse (raio 150 em unidades de viewport mapeado)
+      const dx = mx - pos[idx];
+      const dy = my - pos[idx+1];
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 12) {
+        pos[idx]   += dx * 0.003;
+        pos[idx+1] += dy * 0.003;
+      }
+    }
+    geo.attributes.position.needsUpdate = true;
+    mat.opacity = Math.min(0.75, 0.45 * densityMultiplier);
+    mat.size = Math.min(0.28, 0.14 * densityMultiplier);
+    renderer.render(scene, camera);
+  }
+  animateParticles();
+})();
+
+/* ============================================================
+   GSAP — ANIMAÇÕES DE SCROLL
+   ============================================================ */
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero fade-in stagger
+if (!REDUCED_MOTION) {
+  const heroTl = gsap.timeline({ delay: 0.5 });
+  heroTl
+    .to('.hero-pill',     { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0)
+    .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.25)
+    .to('.hero-para',     { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.45)
+    .to('.hero-btn',      { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.65);
+  gsap.set(['.hero-pill', '.hero-subtitle', '.hero-para', '.hero-btn'], { y: 30 });
+} else {
+  gsap.set(['.hero-pill', '.hero-subtitle', '.hero-para', '.hero-btn'], { opacity: 1 });
+}
+
+// Stat cards: counter animado ao entrar
+document.querySelectorAll('.stat-num[data-count]').forEach(el => {
+  const target  = parseInt(el.dataset.count);
+  const prefix  = el.dataset.prefix || '';
+  const suffix  = el.dataset.suffix || '';
+
+  gsap.set(el.parentElement, { opacity: 0, y: 30 });
+
+  ScrollTrigger.create({
+    trigger: el.parentElement,
+    start: 'top 85%',
+    onEnter: () => {
+      gsap.to(el.parentElement, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' });
+      gsap.to({ val: 0 }, {
+        val: target,
+        duration: 1.4,
+        ease: 'power2.out',
+        onUpdate: function() {
+          el.textContent = prefix + Math.round(this.targets()[0].val) + suffix;
+        }
+      });
+    }
+  });
+});
+
+// Tilt 3D nos stat cards
+document.querySelectorAll('[data-tilt]').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const rx = ((e.clientY - cy) / rect.height) * -16;
+    const ry = ((e.clientX - cx) / rect.width)  *  16;
+    card.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(10px)`;
+    card.style.transition = 'transform 0.05s';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateZ(0)';
+    card.style.transition = 'transform 0.4s ease';
+  });
+});
+
+// Timeline horizontal — stagger entrada
+const tlItems = document.querySelectorAll('.tl-item');
+ScrollTrigger.create({
+  trigger: '#timeline-h',
+  start: 'top 75%',
+  onEnter: () => {
+    gsap.to(tlItems, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: 'power2.out'
+    });
+  }
+});
+
+// Split layout — Aninha — parallax na imagem
+if (!REDUCED_MOTION && !IS_MOBILE) {
+  gsap.to('.creator-img-wrap img', {
+    yPercent: -15,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#aninha',
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+}
+
+// Seção Aninha — entrada dos elementos
+ScrollTrigger.create({
+  trigger: '#aninha',
+  start: 'top 80%',
+  onEnter: () => {
+    gsap.from('.split-text > *', {
+      opacity: 0, y: 30,
+      duration: 0.7,
+      stagger: 0.12,
+      ease: 'power2.out'
+    });
+    gsap.from('.creator-img-wrap', {
+      opacity: 0, x: 40,
+      duration: 0.9,
+      ease: 'power2.out',
+      delay: 0.2
+    });
+  }
+});
+
+// Timeline vertical — escala
+['tv-1','tv-2','tv-3'].forEach((id, i) => {
+  const el = document.getElementById(id);
+  ScrollTrigger.create({
+    trigger: el,
+    start: 'top 85%',
+    onEnter: () => {
+      gsap.to(el, {
+        opacity: 1, x: 0,
+        duration: 0.7,
+        delay: i * 0.15,
+        ease: 'power2.out'
+      });
+      // Animar o número
+      const numEl = el.querySelector('.tv-num');
+      const target = parseInt(numEl.dataset.target);
+      gsap.to({ val: 0 }, {
+        val: target,
+        duration: 1.5,
+        delay: i * 0.15,
+        ease: 'power2.out',
+        onUpdate: function() {
+          numEl.textContent = 'R$' + Math.round(this.targets()[0].val) + 'M';
+          if (i === 2) numEl.textContent += '+';
+        }
+      });
+    }
+  });
+});
+
+// Benchmark card Ano 1
+ScrollTrigger.create({
+  trigger: '#escala',
+  start: 'top 75%',
+  onEnter: () => {
+    gsap.to({ val: 0 }, {
+      val: 11,
+      duration: 1.4,
+      ease: 'power2.out',
+      onUpdate: function() {
+        document.getElementById('bm-num-1').textContent = 'R$' + Math.round(this.targets()[0].val) + 'M';
+      }
+    });
+  }
+});
+
+// Barra de progresso
+ScrollTrigger.create({
+  trigger: '#escala',
+  start: 'top 60%',
+  end: 'bottom 80%',
+  scrub: 1,
+  onUpdate: self => {
+    document.getElementById('progress-bar').style.width = (self.progress * 100) + '%';
+  }
+});
+
+// Flip cards — mobile tap
+if (IS_MOBILE) {
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+  });
+}
+
+// botão "Entrar em contato" removido — burst desativado
+
+// Seção CTA — entrada do título
+ScrollTrigger.create({
+  trigger: '#cta',
+  start: 'top 80%',
+  onEnter: () => {
+    gsap.from('.cta-title', { opacity: 0, y: 40, duration: 1, ease: 'power3.out' });
+    gsap.from('.cta-sub',   { opacity: 0, y: 30, duration: 0.8, delay: 0.2, ease: 'power2.out' });
+    gsap.from('.cta-btns',  { opacity: 0, y: 20, duration: 0.7, delay: 0.4, ease: 'power2.out' });
+    gsap.from('.logos-strip', { opacity: 0, y: 20, duration: 0.7, delay: 0.6, ease: 'power2.out' });
+  }
+});
+
+// ===== SEÇÃO PRODUTO — entrada + partículas orbitando =====
+(function initProdutoSection() {
+  // Gera partículas SVG orbitando ao redor da imagem
+  const sparksEl = document.getElementById('produto-sparks');
+  const sparkColors = ['#FF3CAC','#C9A84C','#9B59B6','#ffffff','#6C3483'];
+  for (let i = 0; i < 18; i++) {
+    const sp = document.createElement('div');
+    sp.className = 'spark';
+    const size  = 3 + Math.random() * 5;
+    const radius = 180 + Math.random() * 80;
+    const dur   = 6 + Math.random() * 10;
+    const delay = Math.random() * -12;
+    const op    = 0.4 + Math.random() * 0.6;
+    const color = sparkColors[Math.floor(Math.random() * sparkColors.length)];
+    sp.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${color};
+      top:50%; left:50%;
+      margin-top:-${size/2}px; margin-left:-${size/2}px;
+      --r:${radius}px;
+      --op:${op};
+      animation-duration:${dur}s;
+      animation-delay:${delay}s;
+      box-shadow: 0 0 ${size*2}px ${color};
+    `;
+    sparksEl.appendChild(sp);
+  }
+
+  // Animação de entrada com ScrollTrigger
+  ScrollTrigger.create({
+    trigger: '#produto-showcase',
+    start: 'top 75%',
+    onEnter: () => {
+      gsap.to('.produto-label', {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power2.out'
+      });
+      gsap.to('.produto-titulo', {
+        opacity: 1, y: 0, duration: 0.8, delay: 0.15, ease: 'power2.out'
+      });
+      gsap.to('#produto-img', {
+        opacity: 1, scale: 1, duration: 1.1, delay: 0.3,
+        ease: 'back.out(1.4)'
+      });
+      gsap.to('.produto-desc', {
+        opacity: 1, y: 0, duration: 0.7, delay: 0.65, ease: 'power2.out'
+      });
+    }
+  });
+
+  // Parallax leve na imagem ao scroll
+  if (!REDUCED_MOTION && !IS_MOBILE) {
+    gsap.to('#produto-img', {
+      yPercent: -12,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#produto-showcase',
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
+  }
+})();
+
+// Smooth scroll para o botão "Descobrir"
+document.querySelector('.hero-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('momento').scrollIntoView({ behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
