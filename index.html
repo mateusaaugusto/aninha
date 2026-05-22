@@ -665,7 +665,40 @@
     .hipoteses-header { margin-bottom: 12px; }
     .hipoteses-header .section-title { max-width: none; }
     .hipoteses-sub {
-      font-size: 17px; color: #7B5EA7; margin-bottom: 36px;
+      font-size: 17px; color: #7B5EA7; margin-bottom: 48px;
+    }
+
+    /* Layout 2 colunas — card + foto */
+    .hip-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Foto sem fundo via mix-blend-mode */
+    .hip-photo-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hip-photo-wrap img {
+      width: 100%;
+      max-width: 460px;
+      border-radius: 32px;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0 24px 48px rgba(155,89,182,0.25));
+      transition: transform 0.6s ease;
+    }
+    .hip-photo-wrap img:hover {
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 900px) {
+      .hip-split { grid-template-columns: 1fr; gap: 36px; }
+      .hip-photo-wrap img { max-width: 340px; }
     }
 
     .hypotheses-grid {
@@ -1135,9 +1168,11 @@
       </div>
       <p class="hipoteses-sub">Skincare pensado para a Gen Alpha — bonito, limpo e feito para brilhar.</p>
 
-      <!-- Card único centralizado -->
-      <div style="display:flex; justify-content:center;">
-        <div class="flip-card card-a" style="max-width:600px; width:100%;">
+      <!-- Layout: card esquerda + foto direita -->
+      <div class="hip-split">
+
+        <!-- ESQUERDA: card -->
+        <div class="flip-card card-a">
           <div class="flip-card-inner">
             <!-- Frente -->
             <div class="flip-front glass-card">
@@ -1179,6 +1214,12 @@
             </div>
           </div>
         </div>
+
+        <!-- DIREITA: foto Aninha sem fundo -->
+        <div class="hip-photo-wrap">
+          <img src="foto aninha 2.jpg" alt="Anna Clara Rios — Aninha" />
+        </div>
+
       </div>
     </div>
   </section>
