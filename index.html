@@ -471,8 +471,22 @@
     /* Coluna direita — Instagram mockup + vídeo placeholder */
     .sincerely-right {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    /* Vídeo vertical — formato portrait */
+    .sy-video-wrap {
+      width: 100%;
+      max-width: 340px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(255,60,172,0.22), 0 4px 20px rgba(108,52,131,0.15);
+    }
+    .sy-video {
+      width: 100%;
+      display: block;
+      border-radius: 24px;
     }
 
     /* Mockup Instagram */
@@ -1392,46 +1406,15 @@
         </ul>
       </div>
 
-      <!-- DIREITA: mockup Instagram + placeholder vídeo -->
+      <!-- DIREITA: vídeo vertical -->
       <div class="sincerely-right">
-
-        <!-- Mockup Instagram -->
-        <div class="ig-mockup">
-          <div class="ig-header">
-            <div class="ig-avatar">SY</div>
-            <div class="ig-info">
-              <h4>sincerelyyours <span class="ig-verified">✓</span></h4>
-              <span>sincerely yours</span>
-            </div>
-          </div>
-          <div class="ig-stats-row">
-            <div><strong>238</strong><small>posts</small></div>
-            <div><strong>496 mil</strong><small>seguidores</small></div>
-            <div><strong>174</strong><small>seguindo</small></div>
-          </div>
-          <div class="ig-bio">
-            skincare essentials for the next generation ⚡💗🤍<br>
-            derm-developed · barrier-friendly · vegan · cruelty-free<br>
-            <a href="#">🔗 sephora.com/sincerely-yours</a>
-          </div>
-          <!-- Grid de fotos simulado -->
-          <div class="ig-grid">
-            <div class="ig-cell"><span>💋</span><span class="ig-cell-label">sugarcoat</span></div>
-            <div class="ig-cell"><span>📢</span><span class="ig-cell-label">spotted</span></div>
-            <div class="ig-cell"><span>✨</span><span class="ig-cell-label">face to face</span><span class="ig-allure">ALLURE</span></div>
-            <div class="ig-cell"><span>🌤</span><span class="ig-cell-label">sunny side up</span></div>
-            <div class="ig-cell"><span>🧴</span><span class="ig-cell-label">so soft</span></div>
-            <div class="ig-cell"><span>🎉</span><span class="ig-cell-label">events</span></div>
-          </div>
+        <div class="sy-video-wrap">
+          <video
+            src="video sincerely yours.mp4"
+            autoplay muted loop playsinline
+            class="sy-video"
+          ></video>
         </div>
-
-        <!-- Placeholder de vídeo -->
-        <div class="video-placeholder" id="sy-video-slot">
-          <div class="vp-icon">▶</div>
-          <h5>Vídeo Sincerely Yours</h5>
-          <p>Adicionar vídeo aqui<br><code style="font-size:10px; color:#FF3CAC;">&lt;video src="seu-video.mp4"&gt;</code></p>
-        </div>
-
       </div>
     </div>
   </section>
@@ -1444,8 +1427,17 @@
     <div class="ref-overlay"></div>
 
     <!-- Apenas frase central -->
-    <div class="ref-content" style="display:flex; align-items:center; justify-content:center; min-height: 260px;">
-      <h2 class="section-title" style="max-width:none; text-align:center; font-size: clamp(32px, 5vw, 64px); margin:0;">
+    <div class="ref-content" style="display:flex; align-items:center; justify-content:center; min-height: 340px;">
+      <h2 style="
+        font-family:'Cormorant Garamond',serif;
+        font-size: clamp(40px, 6.5vw, 88px);
+        font-weight: 700;
+        line-height: 1.1;
+        text-align: center;
+        color: #1A0A2E;
+        max-width: none;
+        margin: 0;
+      ">
         Sincerely Yours fez nos EUA.<br>Nós faremos no Brasil.
       </h2>
     </div>
