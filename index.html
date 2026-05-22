@@ -373,6 +373,263 @@
       color: rgba(255,60,172,0.6);
     }
 
+    /* ===== SEÇÃO SINCERELY YOURS ===== */
+    #sincerely {
+      padding: 80px 5vw;
+    }
+    .sincerely-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Coluna esquerda — texto */
+    .sincerely-text .brand-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,60,172,0.08);
+      border: 1px solid rgba(255,60,172,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #FF3CAC;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .sincerely-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 700;
+      color: #1A0A2E;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .sincerely-text .sy-intro {
+      font-size: 16px;
+      color: #3D2060;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    /* Stats em linha */
+    .sy-stats {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .sy-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .sy-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 700;
+      font-style: italic;
+      background: linear-gradient(135deg, #FF3CAC, #6C3483);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .sy-stat-label {
+      font-size: 11px;
+      color: #7B5EA7;
+      font-weight: 500;
+    }
+
+    /* Lista de conquistas */
+    .sy-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .sy-list li {
+      font-size: 14px;
+      color: #3D2060;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .sy-list li::before {
+      content: '✦';
+      color: #FF3CAC;
+      flex-shrink: 0;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    /* Coluna direita — Instagram mockup + vídeo placeholder */
+    .sincerely-right {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Mockup Instagram */
+    .ig-mockup {
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,100,172,0.2);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .ig-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid rgba(155,89,182,0.1);
+    }
+    .ig-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF3CAC, #9B59B6);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .ig-info h4 {
+      font-size: 15px; font-weight: 600; color: #1A0A2E; margin-bottom: 2px;
+    }
+    .ig-info span {
+      font-size: 12px; color: #7B5EA7;
+    }
+    .ig-verified {
+      width: 16px; height: 16px;
+      background: #3897f0;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: #fff;
+      margin-left: 4px;
+    }
+    .ig-stats-row {
+      display: flex;
+      justify-content: space-around;
+      padding: 14px 20px;
+      border-bottom: 1px solid rgba(155,89,182,0.1);
+    }
+    .ig-stats-row div {
+      text-align: center;
+    }
+    .ig-stats-row strong {
+      display: block;
+      font-size: 15px;
+      color: #1A0A2E;
+    }
+    .ig-stats-row small {
+      font-size: 11px;
+      color: #7B5EA7;
+    }
+    .ig-bio {
+      padding: 14px 20px;
+      font-size: 12px;
+      color: #3D2060;
+      line-height: 1.6;
+    }
+    .ig-bio a {
+      color: #FF3CAC;
+      font-size: 11px;
+      text-decoration: none;
+    }
+
+    /* Grid de fotos do Instagram — simulado */
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .ig-cell {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, #FFE0F0, #E8D5FF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ig-cell:nth-child(1) { background: linear-gradient(135deg, #FFB3D9, #FF79C6); }
+    .ig-cell:nth-child(2) { background: linear-gradient(135deg, #E8D5FF, #C9A8FF); }
+    .ig-cell:nth-child(3) { background: linear-gradient(135deg, #FFE0A0, #FFB347); }
+    .ig-cell:nth-child(4) { background: linear-gradient(135deg, #B3E0FF, #79C6FF); }
+    .ig-cell:nth-child(5) { background: linear-gradient(135deg, #FFD6EE, #FFB3D9); }
+    .ig-cell:nth-child(6) { background: linear-gradient(135deg, #D5FFE8, #A8FFC9); }
+    .ig-cell-label {
+      position: absolute;
+      bottom: 6px; left: 6px;
+      font-size: 9px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      background: rgba(0,0,0,0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .ig-allure {
+      position: absolute;
+      top: 6px; right: 6px;
+      background: #C9A84C;
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 3px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Placeholder de vídeo */
+    .video-placeholder {
+      background: rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      border: 2px dashed rgba(255,60,172,0.35);
+      border-radius: 20px;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-align: center;
+      min-height: 160px;
+    }
+    .video-placeholder .vp-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF3CAC, #9B59B6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .video-placeholder h5 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1A0A2E;
+    }
+    .video-placeholder p {
+      font-size: 12px;
+      color: #7B5EA7;
+    }
+
+    @media (max-width: 900px) {
+      .sincerely-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
     /* ===== SEÇÃO 4 — A REFERÊNCIA ===== */
     #referencia {
       padding: 0;
@@ -1096,6 +1353,89 @@
     </div>
   </section>
 
+  <!-- ===== SEÇÃO SINCERELY YOURS ===== -->
+  <section id="sincerely">
+    <div class="sincerely-grid">
+
+      <!-- ESQUERDA: texto -->
+      <div class="sincerely-text">
+        <span class="brand-tag">🇺🇸 A referência global</span>
+        <h2>Sincerely Yours:<br>o playbook que<br>já funcionou.</h2>
+        <p class="sy-intro">
+          Salish Matter tinha 15 anos, 2.9M de inscritos no YouTube e uma ideia simples: criar uma marca de skincare para a sua geração. O resultado? Um fenômeno cultural que redefiniu o beauty market norte-americano — e abriu o caminho para o Brasil.
+        </p>
+
+        <!-- Stats -->
+        <div class="sy-stats">
+          <div class="sy-stat">
+            <span class="sy-stat-num">496K</span>
+            <span class="sy-stat-label">seguidores Instagram</span>
+          </div>
+          <div class="sy-stat">
+            <span class="sy-stat-num">80K</span>
+            <span class="sy-stat-label">pessoas no evento NJ</span>
+          </div>
+          <div class="sy-stat">
+            <span class="sy-stat-num">US$7M</span>
+            <span class="sy-stat-label">captados em seed</span>
+          </div>
+        </div>
+
+        <!-- Conquistas -->
+        <ul class="sy-list">
+          <li>Lançou na <strong>Sephora</strong> em setembro de 2025 com 4 produtos</li>
+          <li><strong>Sold out</strong> em todo o território americano na semana seguinte ao lançamento</li>
+          <li>Evento de mall em New Jersey reuniu <strong>80.000 pessoas</strong> — recorde absoluto da rede</li>
+          <li>Aporte de <strong>US$7M</strong> com Coefficient Capital + Strand Equity</li>
+          <li>Deal fechado com a <strong>Netflix</strong> para série original expandindo o universo da marca</li>
+          <li>Vencedora do prêmio <strong>Allure Breakthrough New Brand 2026</strong></li>
+        </ul>
+      </div>
+
+      <!-- DIREITA: mockup Instagram + placeholder vídeo -->
+      <div class="sincerely-right">
+
+        <!-- Mockup Instagram -->
+        <div class="ig-mockup">
+          <div class="ig-header">
+            <div class="ig-avatar">SY</div>
+            <div class="ig-info">
+              <h4>sincerelyyours <span class="ig-verified">✓</span></h4>
+              <span>sincerely yours</span>
+            </div>
+          </div>
+          <div class="ig-stats-row">
+            <div><strong>238</strong><small>posts</small></div>
+            <div><strong>496 mil</strong><small>seguidores</small></div>
+            <div><strong>174</strong><small>seguindo</small></div>
+          </div>
+          <div class="ig-bio">
+            skincare essentials for the next generation ⚡💗🤍<br>
+            derm-developed · barrier-friendly · vegan · cruelty-free<br>
+            <a href="#">🔗 sephora.com/sincerely-yours</a>
+          </div>
+          <!-- Grid de fotos simulado -->
+          <div class="ig-grid">
+            <div class="ig-cell"><span>💋</span><span class="ig-cell-label">sugarcoat</span></div>
+            <div class="ig-cell"><span>📢</span><span class="ig-cell-label">spotted</span></div>
+            <div class="ig-cell"><span>✨</span><span class="ig-cell-label">face to face</span><span class="ig-allure">ALLURE</span></div>
+            <div class="ig-cell"><span>🌤</span><span class="ig-cell-label">sunny side up</span></div>
+            <div class="ig-cell"><span>🧴</span><span class="ig-cell-label">so soft</span></div>
+            <div class="ig-cell"><span>🎉</span><span class="ig-cell-label">events</span></div>
+          </div>
+        </div>
+
+        <!-- Placeholder de vídeo -->
+        <div class="video-placeholder" id="sy-video-slot">
+          <div class="vp-icon">▶</div>
+          <h5>Vídeo Sincerely Yours</h5>
+          <p>Adicionar vídeo aqui<br><code style="font-size:10px; color:#FF3CAC;">&lt;video src="seu-video.mp4"&gt;</code></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ===== SEÇÃO 4 — A REFERÊNCIA ===== -->
   <section id="referencia">
     <!-- Vídeo de fundo -->
@@ -1103,37 +1443,11 @@
     <!-- Overlay de legibilidade -->
     <div class="ref-overlay"></div>
 
-    <!-- Conteúdo acima do vídeo -->
-    <div class="ref-content">
-      <div class="ref-intro">
-        <p class="section-label">O playbook já foi testado</p>
-        <h2 class="section-title" style="max-width:none;">Sincerely Yours fez nos EUA.<br>Nós faremos no Brasil.</h2>
-      </div>
-
-      <!-- Timeline horizontal -->
-      <div class="timeline-h" id="timeline-h">
-        <div class="tl-item">
-          <div class="tl-dot">Set<br>2025</div>
-          <div class="tl-text"><strong>Lançamento</strong>na Sephora com 4 produtos</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot">80K</div>
-          <div class="tl-text"><strong>80.000 pessoas</strong>no evento de mall em NJ</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot" style="font-size:9px;">Sold<br>Out</div>
-          <div class="tl-text"><strong>Sold out</strong>esgotado nos EUA na semana seguinte</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot">US$7M</div>
-          <div class="tl-text"><strong>US$7M</strong>Coefficient Capital + Strand Equity</div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot" style="font-size:9px;">Net<br>flix</div>
-          <div class="tl-text"><strong>Netflix</strong>deal de série para expandir o universo</div>
-        </div>
-      </div>
-
+    <!-- Apenas frase central -->
+    <div class="ref-content" style="display:flex; align-items:center; justify-content:center; min-height: 260px;">
+      <h2 class="section-title" style="max-width:none; text-align:center; font-size: clamp(32px, 5vw, 64px); margin:0;">
+        Sincerely Yours fez nos EUA.<br>Nós faremos no Brasil.
+      </h2>
     </div>
   </section>
 
