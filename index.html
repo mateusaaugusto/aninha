@@ -1303,6 +1303,100 @@
       color: #7B5EA7;
     }
 
+    /* ===== SEÇÃO ROADMAP ===== */
+    #roadmap { padding: 80px 5vw; position: relative; }
+
+    .road-header { text-align: center; margin-bottom: 52px; }
+    .road-header .pill { margin-bottom: 16px; }
+    .road-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 5vw, 62px);
+      font-weight: 700; line-height: 1.1; color: #1A0A2E; margin-bottom: 12px;
+    }
+    .road-header h2 em {
+      font-style: italic;
+      background: linear-gradient(90deg, #FF9EE0, #D4AAFF);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .road-header > p { font-size: 15px; color: #7B5EA7; opacity: 0.85; }
+
+    .road-products { display: flex; gap: 16px; justify-content: center; margin-bottom: 64px; flex-wrap: wrap; }
+    .road-product-card {
+      background: rgba(255,255,255,0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 16px 24px;
+      text-align: center; min-width: 148px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .road-product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(201,168,76,0.2); }
+    .rpc-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+    .rpc-name { font-size: 13px; font-weight: 700; color: #1A0A2E; display: block; margin-bottom: 4px; }
+    .rpc-desc { font-size: 11px; color: #7B5EA7; line-height: 1.4; }
+
+    .road-session { position: relative; max-width: 960px; margin: 0 auto 80px; }
+    .road-session-label {
+      text-align: center; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: #FF9EE0; margin-bottom: 40px;
+    }
+    .road-line {
+      position: absolute; left: 50%; top: 0; bottom: 0; width: 3px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #FF3CAC 0%, #9B59B6 60%, #C9A84C 100%);
+      border-radius: 2px; z-index: 0;
+    }
+    .road-row {
+      display: grid; grid-template-columns: 1fr 40px 1fr;
+      align-items: start; margin-bottom: 28px; position: relative; z-index: 1;
+    }
+    .road-row.left  .road-card { grid-column: 1; justify-self: end;   max-width: min(400px,42vw); width: 100%; }
+    .road-row.left  .road-dot  { grid-column: 2; justify-self: center; margin-top: 24px; }
+    .road-row.right .road-card { grid-column: 3; justify-self: start;  max-width: min(400px,42vw); width: 100%; }
+    .road-row.right .road-dot  { grid-column: 2; justify-self: center; margin-top: 24px; }
+    .road-row.launch           { display: flex; justify-content: center; margin-top: 8px; }
+
+    .road-card {
+      background: rgba(255,255,255,0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212,170,255,0.3); border-radius: 16px; padding: 20px 24px;
+    }
+    .road-dot {
+      width: 12px; height: 12px; border-radius: 50%; background: #FF3CAC;
+      box-shadow: 0 0 10px rgba(255,60,172,0.5); flex-shrink: 0; z-index: 2;
+    }
+    .road-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+    .road-card-meta { display: flex; flex-direction: column; gap: 3px; }
+    .road-icon-month { display: flex; align-items: center; gap: 8px; }
+    .road-icon { font-size: 16px; }
+    .road-month { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #FF9EE0; }
+    .road-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 700; color: #1A0A2E; margin-top: 2px; }
+    .road-num { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; font-style: italic; color: #1A0A2E; opacity: 0.12; line-height: 1; flex-shrink: 0; }
+    .road-divider { height: 1px; background: linear-gradient(90deg, rgba(212,170,255,0.4), transparent); margin-bottom: 12px; }
+    .road-items { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .road-items li { font-size: 12.5px; color: #3D2060; padding-left: 18px; position: relative; line-height: 1.45; }
+    .road-items li::before { content: '✦'; position: absolute; left: 0; color: #FF9EE0; font-size: 9px; top: 3px; }
+
+    /* Launch card — especial */
+    .road-card-launch {
+      width: min(560px, 70vw);
+      background: linear-gradient(135deg, #FF3CAC 0%, #9B59B6 55%, #6C3483 100%);
+      border-radius: 24px; padding: 36px 40px; text-align: center;
+      box-shadow: 0 20px 60px rgba(255,60,172,0.4);
+    }
+    .rc-launch-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+    .rc-launch-month { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
+    .rc-launch-title { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .rc-launch-sub { font-style: italic; color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 24px; }
+    .launch-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .launch-badge { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); border-radius: 100px; padding: 8px 16px; font-size: 12px; color: #fff; font-weight: 500; }
+
+    @media (max-width: 760px) {
+      .road-row { grid-template-columns: 28px 1fr !important; gap: 0 12px; }
+      .road-row.left .road-card,
+      .road-row.right .road-card { grid-column: 2 !important; grid-row: 1; justify-self: start !important; max-width: 100% !important; }
+      .road-row.left .road-dot,
+      .road-row.right .road-dot  { grid-column: 1 !important; grid-row: 1; justify-self: center; }
+      .road-line { left: 14px !important; transform: none !important; }
+      .road-card-launch { width: 100%; padding: 28px 24px; }
+    }
+
     /* ===== SEÇÃO 7 — CTA FINAL ===== */
     #cta {
       padding: 80px 5vw 72px;
@@ -1698,6 +1792,255 @@
     </div>
   </section>
 
+
+  <!-- ===== SEÇÃO ROADMAP ===== -->
+  <section id="roadmap">
+    <div style="max-width:1100px; margin:0 auto;">
+
+      <div class="road-header" data-road-header>
+        <span class="pill">O Plano</span>
+        <h2>De Junho a Novembro.<br><em>Do zero ao lançamento.</em></h2>
+        <p>10 fases · 6 meses · uma marca construída com intenção.</p>
+      </div>
+
+      <div class="road-products" data-road-products>
+        <div class="road-product-card">
+          <span class="rpc-icon">🫧</span>
+          <span class="rpc-name">Gel de Limpeza</span>
+          <span class="rpc-desc">Fórmula suave,<br>sem sulfatos agressivos</span>
+        </div>
+        <div class="road-product-card">
+          <span class="rpc-icon">✨</span>
+          <span class="rpc-name">Hidratante</span>
+          <span class="rpc-desc">Textura leve,<br>certificado ANVISA</span>
+        </div>
+        <div class="road-product-card">
+          <span class="rpc-icon">💨</span>
+          <span class="rpc-name">Hit Fresh</span>
+          <span class="rpc-desc">Sérum em névoa<br>refrescante + brilho sutil</span>
+        </div>
+      </div>
+
+      <!-- ── SESSÃO 1 ── -->
+      <div class="road-session">
+        <p class="road-session-label">Sessão 1 · Fundação & Desenvolvimento</p>
+        <div class="road-line"></div>
+
+        <!-- 01 left -->
+        <div class="road-row left">
+          <div class="road-card" data-road-card data-side="left">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">⚖️</span><span class="road-month">Junho</span></div>
+                <span class="road-title">Fundação &amp; Jurídico</span>
+              </div>
+              <span class="road-num">01</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Nome da marca + INPI Cl. 3 e 35</li>
+              <li>Contrato societário com a Aninha</li>
+              <li>CNPJ + estrutura jurídica</li>
+              <li>Domínio e handles sociais</li>
+            </ul>
+          </div>
+          <div class="road-dot"></div>
+        </div>
+
+        <!-- 02 right -->
+        <div class="road-row right">
+          <div class="road-dot"></div>
+          <div class="road-card" data-road-card data-side="right">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">✨</span><span class="road-month">Jun–Jul</span></div>
+                <span class="road-title">Identidade Visual</span>
+              </div>
+              <span class="road-num">02</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Logo final em vetor</li>
+              <li>Brand guidelines + paleta</li>
+              <li>Design embalagens + mockups 3D</li>
+              <li>Brand voice</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 03 left -->
+        <div class="road-row left">
+          <div class="road-card" data-road-card data-side="left">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">🔬</span><span class="road-month">Jun–Set</span></div>
+                <span class="road-title">Formulação dos Produtos</span>
+              </div>
+              <span class="road-num">03</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Seleção de formuladora</li>
+              <li>Brief técnico dos 3 produtos</li>
+              <li>Round 1 de amostras + avaliação</li>
+              <li>Round 2 + aprovação final</li>
+            </ul>
+          </div>
+          <div class="road-dot"></div>
+        </div>
+
+        <!-- 04 right -->
+        <div class="road-row right">
+          <div class="road-dot"></div>
+          <div class="road-card" data-road-card data-side="right">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">📋</span><span class="road-month">Jul–Set</span></div>
+                <span class="road-title">ANVISA &amp; Regulatório</span>
+              </div>
+              <span class="road-num">04</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Consultora RA</li>
+              <li>Laudos: dermato + estabilidade + segurança</li>
+              <li>Notificação ANVISA Classe I</li>
+              <li>Revisão de claims e rótulos</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 05 left -->
+        <div class="road-row left">
+          <div class="road-card" data-road-card data-side="left">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">📦</span><span class="road-month">Jul–Set</span></div>
+                <span class="road-title">Embalagem &amp; Rótulos</span>
+              </div>
+              <span class="road-num">05</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Fornecedor stock packaging</li>
+              <li>Design rótulos com revisão ANVISA</li>
+              <li>Aprovação de amostras</li>
+              <li>Pedido de impressão</li>
+            </ul>
+          </div>
+          <div class="road-dot"></div>
+        </div>
+
+      </div><!-- /road-session 1 -->
+
+      <!-- ── SESSÃO 2 ── -->
+      <div class="road-session">
+        <p class="road-session-label">Sessão 2 · Execução &amp; Lançamento</p>
+        <div class="road-line"></div>
+
+        <!-- 06 right -->
+        <div class="road-row right">
+          <div class="road-dot"></div>
+          <div class="road-card" data-road-card data-side="right">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">🛍️</span><span class="road-month">Ago–Set</span></div>
+                <span class="road-title">E-commerce &amp; Digital</span>
+              </div>
+              <span class="road-num">06</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Loja online (Nuvemshop/Shopify)</li>
+              <li>Integrações pagamento + frete</li>
+              <li>Fotos profissionais de produto</li>
+              <li>Copy + SEO</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 07 left -->
+        <div class="road-row left">
+          <div class="road-card" data-road-card data-side="left">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">🎬</span><span class="road-month">Ago–Out</span></div>
+                <span class="road-title">Conteúdo com a Aninha</span>
+              </div>
+              <span class="road-num">07</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Série de teasers "algo vem aí"</li>
+              <li>Bastidores do desenvolvimento</li>
+              <li>Reveal da marca + countdown</li>
+              <li>Build de lista de espera</li>
+            </ul>
+          </div>
+          <div class="road-dot"></div>
+        </div>
+
+        <!-- 08 right -->
+        <div class="road-row right">
+          <div class="road-dot"></div>
+          <div class="road-card" data-road-card data-side="right">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">🚚</span><span class="road-month">Set–Out</span></div>
+                <span class="road-title">Logística &amp; PR</span>
+              </div>
+              <span class="road-num">08</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>3PL setup + fulfillment</li>
+              <li>Unboxing experience</li>
+              <li>Press kit + assessoria</li>
+              <li>Influencer seeding</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 09 left -->
+        <div class="road-row left">
+          <div class="road-card" data-road-card data-side="left">
+            <div class="road-card-head">
+              <div class="road-card-meta">
+                <div class="road-icon-month"><span class="road-icon">🏭</span><span class="road-month">Outubro</span></div>
+                <span class="road-title">Produção Industrial</span>
+              </div>
+              <span class="road-num">09</span>
+            </div>
+            <div class="road-divider"></div>
+            <ul class="road-items">
+              <li>Ordem de produção 1º lote</li>
+              <li>Fabricação + QC</li>
+              <li>Aplicação de rótulos</li>
+              <li>Envio ao estoque</li>
+            </ul>
+          </div>
+          <div class="road-dot"></div>
+        </div>
+
+        <!-- 10 LAUNCH — centralizado -->
+        <div class="road-row launch">
+          <div class="road-card-launch" data-road-card data-side="center">
+            <span class="rc-launch-icon">🚀</span>
+            <p class="rc-launch-month">Novembro 2025</p>
+            <h3 class="rc-launch-title">Lançamento</h3>
+            <p class="rc-launch-sub">Studios Aninha · Belo Horizonte</p>
+            <div class="launch-badges">
+              <span class="launch-badge">🎪 Evento Presencial</span>
+              <span class="launch-badge">📱 Live Simultânea</span>
+              <span class="launch-badge">🛒 E-commerce Ao Vivo</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /road-session 2 -->
+
+    </div>
+  </section>
 
   <!-- ===== SEÇÃO 7 — CTA FINAL ===== -->
   <section id="cta">
@@ -2267,10 +2610,50 @@ ScrollTrigger.create({
   }
 })();
 
+// ── ROADMAP ANIMATIONS ──
+(function initRoadmap() {
+  if (typeof gsap === 'undefined') return;
+
+  // Linha se "desenha" conforme o scroll
+  document.querySelectorAll('.road-line').forEach(function(line) {
+    gsap.set(line, { scaleY: 0, transformOrigin: 'top center' });
+    gsap.to(line, {
+      scaleY: 1, ease: 'none',
+      scrollTrigger: {
+        trigger: line.closest('.road-session'),
+        start: 'top 60%', end: 'bottom 40%', scrub: 0.8
+      }
+    });
+  });
+
+  // Header do roadmap
+  gsap.from('[data-road-header]', {
+    y: 40, opacity: 0, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '[data-road-header]', start: 'top 80%' }
+  });
+
+  // Cards de produto
+  gsap.from('[data-road-products] > *', {
+    y: 30, opacity: 0, stagger: 0.12, duration: 0.7, ease: 'power2.out',
+    scrollTrigger: { trigger: '[data-road-products]', start: 'top 80%' }
+  });
+
+  // Cards de fase — alternados esquerda/direita
+  document.querySelectorAll('[data-road-card]').forEach(function(card) {
+    var side = card.getAttribute('data-side');
+    var xFrom = side === 'left' ? -60 : side === 'right' ? 60 : 0;
+    gsap.set(card, { opacity: 0, x: xFrom });
+    gsap.to(card, {
+      opacity: 1, x: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: card, start: 'top 82%' }
+    });
+  });
+})();
+
 // Smooth scroll para o botão "Descobrir"
 document.querySelector('.hero-btn').addEventListener('click', function(e) {
   e.preventDefault();
-  document.getElementById('momento').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('aninha').scrollIntoView({ behavior: 'smooth' });
 });
 </script>
 </body>
