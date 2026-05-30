@@ -208,10 +208,7 @@
       50%       { transform: translateY(4px); }
     }
 
-    /* ===== SEÇÃO 2 — O MOMENTO ===== */
-    #momento {
-      padding: 64px 5vw 56px;
-    }
+    /* ===== SEÇÃO 2 — O MOMENTO (removida) ===== */
     .section-label {
       font-family: 'DM Sans', sans-serif;
       font-size: 11px;
@@ -229,49 +226,6 @@
       color: #1A0A2E;
       margin-bottom: 36px;
       max-width: 700px;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 1100px;
-    }
-
-    .stat-card {
-      padding: 36px 28px;
-      transition: transform 0.15s ease;
-    }
-    .stat-card .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 5vw, 56px);
-      font-weight: 700;
-      font-style: italic;
-      background: linear-gradient(135deg, #FF3CAC 0%, #9B59B6 50%, #6C3483 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-card .stat-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: #1A0A2E;
-      margin-bottom: 6px;
-    }
-    .stat-card .stat-source {
-      font-size: 10px;
-      color: #7B5EA7;
-      letter-spacing: 0.05em;
-    }
-
-    .sources-line {
-      margin-top: 32px;
-      font-size: 11px;
-      color: #7B5EA7;
-      letter-spacing: 0.03em;
     }
 
     /* ===== SEÇÃO 3 — A ANINHA ===== */
@@ -1417,7 +1371,6 @@
 
     /* ===== RESPONSIVO ===== */
     @media (max-width: 900px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .split-layout { grid-template-columns: 1fr; gap: 48px; }
       .compare-grid { grid-template-columns: 1fr; }
       .hypotheses-grid { grid-template-columns: 1fr; }
@@ -1426,7 +1379,6 @@
       .timeline-h::before { display: none; }
     }
     @media (max-width: 600px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
       .flip-card { height: auto; min-height: 420px; }
       .hero-content { margin-top: 80px; }
     }
@@ -1456,57 +1408,6 @@
     <div class="scroll-indicator">
       <span>Scroll</span>
       <div class="chevron"></div>
-    </div>
-  </section>
-
-  <!-- ===== SEÇÃO 2 — O MOMENTO ===== -->
-  <section id="momento">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 64px 5vw 56px;">
-      <p class="section-label">O mercado</p>
-      <h2 class="section-title">O mercado que ninguém no Brasil<br>ainda conquistou</h2>
-
-      <div class="stats-grid">
-        <!-- Card 1 -->
-        <div class="glass-card stat-card" data-tilt>
-          <span class="stat-num" data-count="14" data-prefix="US$" data-suffix="B">US$0B</span>
-          <p class="stat-label">gastos em beauty pela Gen Alpha em 2024</p>
-          <p class="stat-source">FIT Report, 2025</p>
-        </div>
-        <!-- Card 2 -->
-        <div class="glass-card stat-card" data-tilt>
-          <span class="stat-num" data-count="70" data-prefix="+" data-suffix="%">+0%</span>
-          <p class="stat-label">crescimento vs. 2023</p>
-          <p class="stat-source">FIT Report, 2025</p>
-        </div>
-        <!-- Card 3 -->
-        <div class="glass-card stat-card" data-tilt>
-          <span class="stat-num" data-count="150" data-prefix="+" data-suffix="%">+0%</span>
-          <p class="stat-label">adolescentes usando sérum facial em 1 ano</p>
-          <p class="stat-source">Kantar, 2024</p>
-        </div>
-        <!-- Card 4 -->
-        <div class="glass-card stat-card" data-tilt>
-          <span class="stat-num" data-count="49" data-prefix="" data-suffix="M">0M</span>
-          <p class="stat-label">membros Gen Alpha monitorados globalmente</p>
-          <p class="stat-source">Kantar Worldpanel</p>
-        </div>
-        <!-- Card 5 -->
-        <div class="glass-card stat-card" data-tilt>
-          <span class="stat-num" data-count="91" data-prefix="" data-suffix="%">0%</span>
-          <p class="stat-label">das meninas 7–17 anos usam lip gloss</p>
-          <p class="stat-source">The Benchmarking Co.</p>
-        </div>
-        <!-- Card 6 -->
-        <div class="glass-card stat-card" data-tilt>
-          <span class="stat-num" data-count="4" data-prefix="" data-suffix="×">0×</span>
-          <p class="stat-label">brasileiros compram mais por influência vs. EUA</p>
-          <p class="stat-source">Norte Media</p>
-        </div>
-      </div>
-
-      <p class="sources-line">
-        Fontes: Kantar Worldpanel 2024 · Fashion Institute of Technology 2025 · The Benchmarking Company · Norte Media
-      </p>
     </div>
   </section>
 
@@ -1684,7 +1585,7 @@
   <!-- ===== SEÇÃO 4 — A REFERÊNCIA ===== -->
   <section id="referencia">
     <!-- Vídeo de fundo -->
-    <video id="ref-video-bg" src="vídeo do hidratante.mp4" autoplay muted loop playsinline></video>
+    <video id="ref-video-bg" src="video hidratente.mp4" autoplay muted loop playsinline></video>
     <!-- Overlay de legibilidade -->
     <div class="ref-overlay"></div>
 
@@ -1721,7 +1622,7 @@
 
       <!-- SUBSTITUIR: produto da aninha.png -->
       <img
-        src="3 produtos aninha.png"
+        src="produtos ref.png"
         alt="Produtos Aninha Beauty"
         class="produto-img"
         id="produto-img"
