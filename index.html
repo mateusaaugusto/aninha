@@ -644,6 +644,195 @@
       .sincerely-grid { grid-template-columns: 1fr; gap: 40px; }
     }
 
+    /* ===== SEÇÃO DADOS ===== */
+    #dados {
+      padding: 80px 5vw;
+      position: relative;
+      overflow: hidden;
+    }
+    #dados::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,158,224,0.08) 0%, rgba(212,170,255,0.12) 60%, rgba(255,200,230,0.06) 100%);
+      pointer-events: none;
+    }
+    .dados-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .dados-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .dados-header .pill { margin-bottom: 16px; }
+    .dados-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 5vw, 62px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #1A0A2E;
+      margin-bottom: 14px;
+    }
+    .dados-header h2 em {
+      font-style: italic;
+      background: linear-gradient(90deg, #FF9EE0, #D4AAFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .dados-header p {
+      font-size: 15px;
+      color: #7B5EA7;
+      opacity: 0.85;
+    }
+
+    /* Grid de big-stats */
+    .dados-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .dado-card {
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(212,170,255,0.35);
+      border-radius: 20px;
+      padding: 32px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .dado-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(212,170,255,0.25);
+    }
+    .dado-card .dc-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 5.5vw, 68px);
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, #FF9EE0 0%, #D4AAFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .dado-card .dc-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #1A0A2E;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+    .dado-card .dc-desc {
+      font-size: 14px;
+      color: #3D2060;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    /* Faixa de categorias em alta */
+    .dados-trend {
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,158,224,0.3);
+      border-radius: 20px;
+      padding: 32px 36px;
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .dt-title {
+      flex-shrink: 0;
+      width: 200px;
+    }
+    .dt-title .dt-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #FF9EE0;
+      margin-bottom: 8px;
+    }
+    .dt-title h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1A0A2E;
+      line-height: 1.2;
+    }
+    .dt-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      flex: 1;
+      align-items: center;
+    }
+    .dt-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212,170,255,0.2);
+      border: 1px solid rgba(212,170,255,0.45);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #3D2060;
+    }
+    .dt-pill strong {
+      font-weight: 700;
+      color: #C084FC;
+    }
+
+    /* Frase de encerramento */
+    .dados-quote {
+      text-align: center;
+      padding: 36px 20px 12px;
+    }
+    .dados-quote blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 30px);
+      font-style: italic;
+      color: #1A0A2E;
+      line-height: 1.4;
+      max-width: 700px;
+      margin: 0 auto 12px;
+    }
+    .dados-quote blockquote em {
+      background: linear-gradient(90deg, #FF9EE0, #D4AAFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: normal;
+      font-weight: 700;
+    }
+    .dados-quote .dq-source {
+      font-size: 12px;
+      color: #7B5EA7;
+      opacity: 0.7;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .dados-grid { grid-template-columns: repeat(2, 1fr); }
+      .dados-trend { flex-direction: column; gap: 20px; }
+      .dt-title { width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .dados-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .dado-card { padding: 22px 16px 18px; }
+    }
+
     /* ===== SEÇÃO 4 — A REFERÊNCIA ===== */
     #referencia {
       padding: 0;
@@ -1419,6 +1608,79 @@
     </div>
   </section>
 
+  <!-- ===== SEÇÃO DADOS ===== -->
+  <section id="dados">
+    <div class="dados-inner">
+
+      <div class="dados-header">
+        <span class="pill">Kantar Worldpanel, 2024</span>
+        <h2>A Gen Alpha já <em>chegou</em><br>ao mercado de beleza.</h2>
+        <p>Dados globais sobre comportamento de consumo da geração que vai definir o beauty do futuro.</p>
+      </div>
+
+      <!-- Big numbers -->
+      <div class="dados-grid">
+        <div class="dado-card">
+          <span class="dc-num">49M</span>
+          <span class="dc-label">jovens monitorados</span>
+          <p class="dc-desc">Gen Alpha acompanhada globalmente pela Kantar em hábitos de beleza e cuidados pessoais.</p>
+        </div>
+        <div class="dado-card">
+          <span class="dc-num">246M</span>
+          <span class="dc-label">ocasiões / semana</span>
+          <p class="dc-desc">Momentos de cuidado pessoal registrados semanalmente — uma rotina de beleza real e consistente.</p>
+        </div>
+        <div class="dado-card">
+          <span class="dc-num">+150%</span>
+          <span class="dc-label">crescimento em sérum facial</span>
+          <p class="dc-desc">O produto que mais cresceu na categoria. A Gen Alpha quer resultados — e sabe o que está comprando.</p>
+        </div>
+        <div class="dado-card">
+          <span class="dc-num">+35%</span>
+          <span class="dc-label">preocupação com pele opaca</span>
+          <p class="dc-desc">"Pele cansada e sem brilho" é a principal queixa que mais cresceu entre jovens da geração alpha.</p>
+        </div>
+        <div class="dado-card">
+          <span class="dc-num">+33%</span>
+          <span class="dc-label">sombras em alta</span>
+          <p class="dc-desc">Maquiagem deixou de ser proibida para a faixa — é expressão de identidade desde cedo.</p>
+        </div>
+        <div class="dado-card">
+          <span class="dc-num">+14%</span>
+          <span class="dc-label">buscas de beleza nas redes</span>
+          <p class="dc-desc">Redes sociais são o principal canal de descoberta e influência de compra para essa geração.</p>
+        </div>
+      </div>
+
+      <!-- Categorias em alta -->
+      <div class="dados-trend">
+        <div class="dt-title">
+          <p class="dt-label">Categorias em crescimento</p>
+          <h3>O que a Gen Alpha está consumindo</h3>
+        </div>
+        <div class="dt-pills">
+          <span class="dt-pill">Sérum facial <strong>+150%</strong></span>
+          <span class="dt-pill">Sombras <strong>+33%</strong></span>
+          <span class="dt-pill">Olheiras <strong>+27%</strong></span>
+          <span class="dt-pill">Delineadores <strong>+20%</strong></span>
+          <span class="dt-pill">Máscaras de cílios <strong>+20%</strong></span>
+          <span class="dt-pill">Base <strong>+5%</strong></span>
+          <span class="dt-pill">"Parecer jovem" <strong>+21%</strong></span>
+        </div>
+      </div>
+
+      <!-- Frase de encerramento -->
+      <div class="dados-quote">
+        <blockquote>
+          "Elas não querem parecer mais velhas.<br>
+          Elas querem parecer <em>jovens — mas melhor.</em>"
+        </blockquote>
+        <p class="dq-source">Kantar Worldpanel · Mercado de Beleza Gen Alpha · 2024</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ===== SEÇÃO 4 — A REFERÊNCIA ===== -->
   <section id="referencia">
     <!-- Vídeo de fundo -->
@@ -1499,8 +1761,8 @@
               <!-- 3 produtos em destaque -->
               <div style="display:flex; gap:20px; justify-content:center; margin:16px 0 20px;">
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-                  <span style="font-size:28px;">💋</span>
-                  <span style="font-size:11px;font-weight:600;color:#FF3CAC;letter-spacing:0.05em;">GLOSS</span>
+                  <span style="font-size:28px;">🫧</span>
+                  <span style="font-size:11px;font-weight:600;color:#FF3CAC;letter-spacing:0.05em;">GEL DE LIMPEZA</span>
                 </div>
                 <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
                   <span style="font-size:28px;">✨</span>
@@ -1517,9 +1779,9 @@
             <div class="flip-back glass-card">
               <h4>Skincare Gen Alpha BR</h4>
               <ul>
-                <li><strong>Gloss</strong> — lip gloss brilhante, fórmula clean, sem parabenos, 91% do ICP já usa</li>
+                <li><strong>Gel de Limpeza</strong> — fórmula suave, sem sulfatos agressivos, certificado ANVISA infantil</li>
                 <li><strong>Hidratante Facial</strong> — textura leve, hidratação profunda, certificado ANVISA infantil</li>
-                <li><strong>Hit Fresh</strong> — névoa refrescante + brilho sutil, uso rápido e viral no dia a dia</li>
+                <li><strong>Hit Fresh</strong> — sérum em névoa refrescante + brilho sutil, uso rápido e viral no dia a dia</li>
                 <li>Sem ativos agressivos — seguro para peles jovens de 7 a 15 anos</li>
                 <li>Ticket: <strong>R$69–99</strong> por kit colecionável</li>
                 <li>D2C + Studios Aninha + varejo âncora (Boticário / Sephora BR)</li>
@@ -1538,70 +1800,6 @@
     </div>
   </section>
 
-  <!-- ===== SEÇÃO 6 — ESCALA DA MARCA ===== -->
-  <section id="escala">
-    <div class="escala-inner" style="max-width:1100px; margin:0 auto; padding:64px 5vw;">
-      <p class="section-label">O tamanho da oportunidade</p>
-      <h2 class="section-title">De zero a referência<br>nacional em 3 anos.</h2>
-
-      <!-- Benchmark -->
-      <div class="benchmark-row">
-        <div class="glass-card bm-card">
-          <p class="bm-brand">Norte Media + Guday (Manu Cit)</p>
-          <p class="bm-num" id="bm-num-1">R$0M</p>
-          <p class="bm-desc">Receita em 2024 → meta de <strong>R$80M em 2025</strong>. Manu Cit: 3M de seguidores.</p>
-        </div>
-        <div class="glass-card bm-card" style="border-color:rgba(255,60,172,0.3);">
-          <p class="bm-brand">Aninha Beauty — Projeção</p>
-          <p class="bm-num" style="-webkit-text-fill-color: transparent; background: linear-gradient(135deg,#FF3CAC,#6C3483); -webkit-background-clip:text; background-clip:text;">R$80M+</p>
-          <p class="bm-desc">Com base de <strong>22.7M subscribers</strong> — 7× maior que a Manu Cit. Escala proporcional.</p>
-        </div>
-      </div>
-
-      <!-- Timeline vertical -->
-      <div class="timeline-v" id="timeline-v">
-        <div class="tv-item" id="tv-1">
-          <span class="tv-dot"></span>
-          <div class="tv-content">
-            <p class="tv-year">Ano 1</p>
-            <p class="tv-num" data-target="12">R$0M</p>
-            <p class="tv-desc">Lançamento D2C + Studios Aninha. Meta: <strong>R$8–12M</strong></p>
-          </div>
-        </div>
-        <div class="tv-item" id="tv-2">
-          <span class="tv-dot"></span>
-          <div class="tv-content">
-            <p class="tv-year">Ano 2</p>
-            <p class="tv-num" data-target="50">R$0M</p>
-            <p class="tv-desc">Entrada varejo âncora + linha completa. Meta: <strong>R$30–50M</strong></p>
-          </div>
-        </div>
-        <div class="tv-item" id="tv-3">
-          <span class="tv-dot"></span>
-          <div class="tv-content">
-            <p class="tv-year">Ano 3</p>
-            <p class="tv-num" data-target="80">R$0M+</p>
-            <p class="tv-desc">Expansão de linha + licenciamento internacional. Meta: <strong>R$80M+</strong></p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Barra de progresso -->
-      <div style="margin-top: 40px;">
-        <p style="font-size:13px; color:#7B5EA7; margin-bottom:12px; font-weight:500;">Projeção de receita 3 anos</p>
-        <div class="progress-wrap">
-          <div class="progress-bar" id="progress-bar"></div>
-        </div>
-        <div class="progress-labels">
-          <span>R$0</span>
-          <span>R$20M</span>
-          <span>R$40M</span>
-          <span>R$60M</span>
-          <span>R$80M+</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ===== SEÇÃO 7 — CTA FINAL ===== -->
   <section id="cta">
